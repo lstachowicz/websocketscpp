@@ -1,5 +1,5 @@
 *
-* This project was created in University of Wrocław by Łukasz Stachowicz
+* This project was created by Łukasz Stachowicz at University of Wrocław
 * under supervision of prof. Waldemar Hebisch as a result of
 * “Network Programming” course.
 *
@@ -30,5 +30,5 @@
 *
 * Assumptions: (deadline 30.10.2014)
 *
-* - Create server to be able connect from web browser as a proof of concept.
+* - Created server to be able connect from web browser as a proof of concept.
 *
