@@ -1,0 +1,105 @@
+<html>
+<script>
+	var socket = null;
+
+	window.onbeforeunload = function() { disconnect() };
+
+	function send() {
+		if (socket != null) {
+
+			var msg = document.getElementById("message").value;
+
+			socket.send(msg);
+		}
+	}
+
+	function connect() {
+		if (socket != null) {
+			socket.close();
+		}
+
+		var ssl = document.getElementById("ssl").checked;
+		var port = document.getElementById("port").value;
+		var host = document.getElementById("host").value;
+		var protocol = document.getElementById("protocol").value;
+
+		createWebSocket(ssl, port, host, protocol);
+	}
+
+	function disconnect() {
+		if (socket != null) {
+			socket.close();
+		}
+
+		socket = null;
+	}
+
+	function createWebSocket(ssl, port, host, protocol) {
+		try {
+			if (ssl) {
+				socket = new WebSocket("wws://" + host + ":" + port, protocol);
+			}
+			else {
+				socket = new WebSocket("ws://127.0.0.1:3000/", "abc");
+				/*
+				 * " + host + ":" + port, protocol);
+				 */
+			}
+		}
+		catch(error) {
+			write("Error! Fail creating WebSocket.\n");
+
+			socket = null;
+
+			return;
+		}
+
+		socket.onopen = function(event) {
+			write("WebSocket is open.\n");
+		};
+
+		socket.onclose = function(event) {
+			write("WebSocket was closed.\n");
+			socket.onerror = function(event) { };
+			socket.onmessage = function(event) { };
+			socket.onclose = function(event) { };
+			socket = null;
+		};
+
+		socket.onmessage = function(event) {
+			write("Message:\n" + event.data + "\n");
+		};
+
+		socket.onerror = function(event) {
+			write("Error!\n");
+			socket.onerror = function(event) { };
+			socket.onmessage = function(event) { };
+			socket.onclose = function(event) { };
+			socket = null;
+		};
+	};
+
+	function write(message) {
+		var pre = document.createElement("p");
+		pre.style.wordWrap = "break-word";
+		pre.innerHTML = message;
+		output.insertBefore(pre, output.firstChild);
+	};
+</script>
+<header>
+</header>
+<body>
+	<h2>WebSocket Test</h2>
+	SSL: <input id="ssl" type="checkbox">
+	Port: <input id="port" type="text" value="3000" size=5>
+	Host: <input id="host" type="text" value="localhost" size=15>
+	Protocol: <input id="protocol" type="text" value="abc" size=15>
+	<br><br>
+	Message: <input id="message" type="text" size=50>
+	<br><br>
+	<button id="connect" type="button" onclick="connect()">Connect</button>
+	<button id="disconnect" type="button" onclick="disconnect()">Disconnect</button>
+	<button id="send" type="button" onclick="send()">Send</button>
+	<div id="output"></div>
+</body>
+</html>
