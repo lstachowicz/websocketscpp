@@ -1,0 +1,34 @@
+*
+* This project was created in University of Wrocław by Łukasz Stachowicz
+* under supervision of prof. Waldemar Hebisch as a result of
+* “Network Programming” course.
+*
+* Assumption is to create WebSocket server in c++ according to
+* documentation https://tools.ietf.org/html/rfc6455. 
+*
+
+* 30.10.2014 
+*
+* Assumptions: (deadline 06.11.2014)
+*
+* - Establish communication browser with server (e.g. echo test).
+* - Add callback to get notifications (e.g. new connection, closed connection,
+*   new message) from server.
+
+* 26.10.2014
+*
+* Results:
+*
+* - Created handshake browser with server.
+* - Created sample application of server usage.
+* - Created websocketscpp as dynamic library for macosx.
+* - Created html sample page to connect to server from browser
+*   (firefox 32.0.3 for MacOSX)
+* - Added sha1 and base64 algorithm in order to make handshake.
+
+* 23.10.2014
+*
+* Assumptions: (deadline 30.10.2014)
+*
+* - Create server to be able connect from web browser as a proof of concept.
+*

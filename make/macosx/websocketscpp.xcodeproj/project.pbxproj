@@ -7,30 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2510D90919FADD140063F30A /* ClientConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2510D90719FADD140063F30A /* ClientConnection.cpp */; };
-		2510D90A19FADD140063F30A /* ClientConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2510D90819FADD140063F30A /* ClientConnection.h */; };
-		2543D5CC19FB92DB00FB8EEB /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2543D5CA19FB92DB00FB8EEB /* Parser.cpp */; };
-		2543D5CD19FB92DB00FB8EEB /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2543D5CB19FB92DB00FB8EEB /* Parser.h */; };
-		25FFB08C19FBE699009004EF /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25FFB08719FBE699009004EF /* sha1.cpp */; };
-		25FFB08D19FBE699009004EF /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 25FFB08819FBE699009004EF /* sha1.h */; };
-		25FFB09219FBE6E3009004EF /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25FFB09019FBE6E3009004EF /* Server.cpp */; };
-		25FFB09319FBE6E3009004EF /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 25FFB09119FBE6E3009004EF /* Server.h */; };
-		25FFB09719FBEFBA009004EF /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25FFB09519FBEFBA009004EF /* base64.cpp */; };
-		25FFB09819FBEFBA009004EF /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 25FFB09619FBEFBA009004EF /* base64.h */; };
+		25A7BC9119FD020D003489D4 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC8F19FD020D003489D4 /* sha1.cpp */; };
+		25A7BC9219FD020D003489D4 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9019FD020D003489D4 /* sha1.h */; };
+		25A7BC9519FD021E003489D4 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC9319FD021E003489D4 /* base64.cpp */; };
+		25A7BC9619FD021E003489D4 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9419FD021E003489D4 /* base64.h */; };
+		25A7BC9D19FD0230003489D4 /* ClientConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC9719FD0230003489D4 /* ClientConnection.cpp */; };
+		25A7BC9E19FD0230003489D4 /* ClientConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9819FD0230003489D4 /* ClientConnection.h */; };
+		25A7BC9F19FD0230003489D4 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC9919FD0230003489D4 /* Parser.cpp */; };
+		25A7BCA019FD0230003489D4 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9A19FD0230003489D4 /* Parser.h */; };
+		25A7BCA119FD0230003489D4 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC9B19FD0230003489D4 /* Server.cpp */; };
+		25A7BCA219FD0230003489D4 /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9C19FD0230003489D4 /* Server.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2510D90719FADD140063F30A /* ClientConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientConnection.cpp; path = ../src/ClientConnection.cpp; sourceTree = "<group>"; };
-		2510D90819FADD140063F30A /* ClientConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientConnection.h; path = ../src/ClientConnection.h; sourceTree = "<group>"; };
 		251D39E319F950CB0044C266 /* libwebsocketscpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libwebsocketscpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		2543D5CA19FB92DB00FB8EEB /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../src/Parser.cpp; sourceTree = "<group>"; };
-		2543D5CB19FB92DB00FB8EEB /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../src/Parser.h; sourceTree = "<group>"; };
-		25FFB08719FBE699009004EF /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = "../tools/sha-1/sha1.cpp"; sourceTree = "<group>"; };
-		25FFB08819FBE699009004EF /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = "../tools/sha-1/sha1.h"; sourceTree = "<group>"; };
-		25FFB09019FBE6E3009004EF /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Server.cpp; path = ../src/Server.cpp; sourceTree = "<group>"; };
-		25FFB09119FBE6E3009004EF /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../src/Server.h; sourceTree = "<group>"; };
-		25FFB09519FBEFBA009004EF /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64.cpp; path = ../tools/base64/base64.cpp; sourceTree = "<group>"; };
-		25FFB09619FBEFBA009004EF /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = ../tools/base64/base64.h; sourceTree = "<group>"; };
+		25A7BC8F19FD020D003489D4 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = ../../tools/sha1/sha1.cpp; sourceTree = "<group>"; };
+		25A7BC9019FD020D003489D4 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = ../../tools/sha1/sha1.h; sourceTree = "<group>"; };
+		25A7BC9319FD021E003489D4 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64.cpp; path = ../../tools/base64/base64.cpp; sourceTree = "<group>"; };
+		25A7BC9419FD021E003489D4 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = ../../tools/base64/base64.h; sourceTree = "<group>"; };
+		25A7BC9719FD0230003489D4 /* ClientConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientConnection.cpp; path = ../../src/ClientConnection.cpp; sourceTree = "<group>"; };
+		25A7BC9819FD0230003489D4 /* ClientConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientConnection.h; path = ../../src/ClientConnection.h; sourceTree = "<group>"; };
+		25A7BC9919FD0230003489D4 /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../src/Parser.cpp; sourceTree = "<group>"; };
+		25A7BC9A19FD0230003489D4 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../../src/Parser.h; sourceTree = "<group>"; };
+		25A7BC9B19FD0230003489D4 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Server.cpp; path = ../../src/Server.cpp; sourceTree = "<group>"; };
+		25A7BC9C19FD0230003489D4 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../../src/Server.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,9 +47,9 @@
 		2510D90519FADCE80063F30A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				25FFB09119FBE6E3009004EF /* Server.h */,
-				2510D90719FADD140063F30A /* ClientConnection.cpp */,
-				2543D5CA19FB92DB00FB8EEB /* Parser.cpp */,
+				25A7BC9819FD0230003489D4 /* ClientConnection.h */,
+				25A7BC9A19FD0230003489D4 /* Parser.h */,
+				25A7BC9C19FD0230003489D4 /* Server.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -57,9 +57,9 @@
 		2510D90619FADCEF0063F30A /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				25FFB09019FBE6E3009004EF /* Server.cpp */,
-				2510D90819FADD140063F30A /* ClientConnection.h */,
-				2543D5CB19FB92DB00FB8EEB /* Parser.h */,
+				25A7BC9719FD0230003489D4 /* ClientConnection.cpp */,
+				25A7BC9919FD0230003489D4 /* Parser.cpp */,
+				25A7BC9B19FD0230003489D4 /* Server.cpp */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -67,8 +67,7 @@
 		251D39DA19F950CB0044C266 = {
 			isa = PBXGroup;
 			children = (
-				25FFB09419FBEFAB009004EF /* Base64 */,
-				2543D5D019FBE4BD00FB8EEB /* SHA-1 */,
+				25A7BC8C19FD0183003489D4 /* Tools */,
 				2510D90619FADCEF0063F30A /* Header */,
 				2510D90519FADCE80063F30A /* Source */,
 				251D39E419F950CB0044C266 /* Products */,
@@ -83,20 +82,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2543D5D019FBE4BD00FB8EEB /* SHA-1 */ = {
+		2543D5D019FBE4BD00FB8EEB /* SHA1 */ = {
 			isa = PBXGroup;
 			children = (
-				25FFB08719FBE699009004EF /* sha1.cpp */,
-				25FFB08819FBE699009004EF /* sha1.h */,
+				25A7BC8F19FD020D003489D4 /* sha1.cpp */,
+				25A7BC9019FD020D003489D4 /* sha1.h */,
 			);
-			name = "SHA-1";
+			name = SHA1;
+			sourceTree = "<group>";
+		};
+		25A7BC8C19FD0183003489D4 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				2543D5D019FBE4BD00FB8EEB /* SHA1 */,
+				25FFB09419FBEFAB009004EF /* Base64 */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 		25FFB09419FBEFAB009004EF /* Base64 */ = {
 			isa = PBXGroup;
 			children = (
-				25FFB09519FBEFBA009004EF /* base64.cpp */,
-				25FFB09619FBEFBA009004EF /* base64.h */,
+				25A7BC9319FD021E003489D4 /* base64.cpp */,
+				25A7BC9419FD021E003489D4 /* base64.h */,
 			);
 			name = Base64;
 			sourceTree = "<group>";
@@ -108,11 +116,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25FFB09819FBEFBA009004EF /* base64.h in Headers */,
-				2543D5CD19FB92DB00FB8EEB /* Parser.h in Headers */,
-				25FFB09319FBE6E3009004EF /* Server.h in Headers */,
-				25FFB08D19FBE699009004EF /* sha1.h in Headers */,
-				2510D90A19FADD140063F30A /* ClientConnection.h in Headers */,
+				25A7BC9619FD021E003489D4 /* base64.h in Headers */,
+				25A7BC9E19FD0230003489D4 /* ClientConnection.h in Headers */,
+				25A7BC9219FD020D003489D4 /* sha1.h in Headers */,
+				25A7BCA019FD0230003489D4 /* Parser.h in Headers */,
+				25A7BCA219FD0230003489D4 /* Server.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,11 +180,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25FFB09219FBE6E3009004EF /* Server.cpp in Sources */,
-				2510D90919FADD140063F30A /* ClientConnection.cpp in Sources */,
-				2543D5CC19FB92DB00FB8EEB /* Parser.cpp in Sources */,
-				25FFB09719FBEFBA009004EF /* base64.cpp in Sources */,
-				25FFB08C19FBE699009004EF /* sha1.cpp in Sources */,
+				25A7BC9F19FD0230003489D4 /* Parser.cpp in Sources */,
+				25A7BC9519FD021E003489D4 /* base64.cpp in Sources */,
+				25A7BCA119FD0230003489D4 /* Server.cpp in Sources */,
+				25A7BC9119FD020D003489D4 /* sha1.cpp in Sources */,
+				25A7BC9D19FD0230003489D4 /* ClientConnection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +195,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -216,6 +225,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -227,6 +237,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -251,6 +262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;

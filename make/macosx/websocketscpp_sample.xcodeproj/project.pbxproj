@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2543D5CF19FB980100FB8EEB /* libwebsocketscpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2543D5CE19FB980100FB8EEB /* libwebsocketscpp.dylib */; };
-		25EFD95319F99C3E00C9DD7C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EFD95219F99C3E00C9DD7C /* main.cpp */; };
+		251F540A19FD0477006636C7 /* libwebsocketscpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F540819FD03C1006636C7 /* libwebsocketscpp.dylib */; };
+		253B9D7119FD056000524AD2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 253B9D7019FD056000524AD2 /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,8 +25,8 @@
 
 /* Begin PBXFileReference section */
 		251D39D019F950AC0044C266 /* websocketscpp_sample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = websocketscpp_sample; sourceTree = BUILT_PRODUCTS_DIR; };
-		2543D5CE19FB980100FB8EEB /* libwebsocketscpp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwebsocketscpp.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/libwebsocketscpp-gknvblxnutpwdzfztzrcsmwfmugc/Build/Products/Debug/libwebsocketscpp.dylib"; sourceTree = "<group>"; };
-		25EFD95219F99C3E00C9DD7C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../sample/main.cpp; sourceTree = SOURCE_ROOT; };
+		251F540819FD03C1006636C7 /* libwebsocketscpp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwebsocketscpp.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/websocketscpp-ejrigqoggosbozfgkexttdconozb/Build/Products/Debug/libwebsocketscpp.dylib"; sourceTree = "<group>"; };
+		253B9D7019FD056000524AD2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../sample/server/main.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,7 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2543D5CF19FB980100FB8EEB /* libwebsocketscpp.dylib in Frameworks */,
+				251F540A19FD0477006636C7 /* libwebsocketscpp.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,7 +44,7 @@
 		251D39C719F950AC0044C266 = {
 			isa = PBXGroup;
 			children = (
-				2543D5CE19FB980100FB8EEB /* libwebsocketscpp.dylib */,
+				251F540819FD03C1006636C7 /* libwebsocketscpp.dylib */,
 				251D39D219F950AC0044C266 /* websocketscpp_sample */,
 				251D39D119F950AC0044C266 /* Products */,
 			);
@@ -61,7 +61,7 @@
 		251D39D219F950AC0044C266 /* websocketscpp_sample */ = {
 			isa = PBXGroup;
 			children = (
-				25EFD95219F99C3E00C9DD7C /* main.cpp */,
+				253B9D7019FD056000524AD2 /* main.cpp */,
 			);
 			path = websocketscpp_sample;
 			sourceTree = "<group>";
@@ -122,7 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25EFD95319F99C3E00C9DD7C /* main.cpp in Sources */,
+				253B9D7119FD056000524AD2 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +164,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../src,
+					../../src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -203,7 +203,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../src,
+					../../src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -217,7 +217,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/libwebsocketscpp-gknvblxnutpwdzfztzrcsmwfmugc/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/websocketscpp-ejrigqoggosbozfgkexttdconozb/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -229,7 +229,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/libwebsocketscpp-gknvblxnutpwdzfztzrcsmwfmugc/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/websocketscpp-ejrigqoggosbozfgkexttdconozb/Build/Products/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
