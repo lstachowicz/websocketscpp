@@ -47,9 +47,9 @@
 		2510D90519FADCE80063F30A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				25A7BC9819FD0230003489D4 /* ClientConnection.h */,
-				25A7BC9A19FD0230003489D4 /* Parser.h */,
-				25A7BC9C19FD0230003489D4 /* Server.h */,
+				25A7BC9719FD0230003489D4 /* ClientConnection.cpp */,
+				25A7BC9919FD0230003489D4 /* Parser.cpp */,
+				25A7BC9B19FD0230003489D4 /* Server.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -57,9 +57,9 @@
 		2510D90619FADCEF0063F30A /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				25A7BC9719FD0230003489D4 /* ClientConnection.cpp */,
-				25A7BC9919FD0230003489D4 /* Parser.cpp */,
-				25A7BC9B19FD0230003489D4 /* Server.cpp */,
+				25A7BC9819FD0230003489D4 /* ClientConnection.h */,
+				25A7BC9A19FD0230003489D4 /* Parser.h */,
+				25A7BC9C19FD0230003489D4 /* Server.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";

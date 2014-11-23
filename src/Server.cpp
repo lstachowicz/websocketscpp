@@ -28,6 +28,7 @@
 #include "base64.h"
 
 #include <vector>
+#include <assert.h>
 
 using namespace WebSocketCpp;
 
@@ -64,9 +65,6 @@ int Server::Wait(int time)
 
 	bool quit = false;
 
-	struct sockaddr_in remote_addr;
-	socklen_t addrlen;
-
 	while (!quit)
 	{
 		timeval tv;
@@ -85,7 +83,7 @@ int Server::Wait(int time)
 			}
 			else if ((errno == EINTR && quit) || errno == EBADF)
 			{
-				std::cerr << "Interrupt while waiting for new events error no %i." << errno << " Closing program." << std::endl;
+				std::cerr << "Interrupt while waiting for new events error no " << errno << " "  << strerror(errno) << " Closing program." << std::endl;
 
 				quit = true;
 
@@ -110,87 +108,35 @@ int Server::Wait(int time)
 				{
 					if (fd_listener == i)
 					{
-						std::cout << "New connection on fds.\n" << std::endl;
-
-						addrlen = sizeof(remote_addr);
-						int new_fd = ::accept(fd_listener, (struct sockaddr *)&remote_addr, &addrlen);
-
-						if (new_fd == -1)
-						{
-							std::cout << "Fail to get new connection.\n" << std::endl;
-						}
-						else
-						{
-							FD_SET(new_fd, &fd_connections);
-
-							if(new_fd > fd_max - 1)
-							{
-								fd_max = new_fd + 1;
-							}
-
-							connections.push_back(std::unique_ptr<ClientConnection>(new ClientConnection(new_fd, ntohs(remote_addr.sin_port), inet_ntoa(remote_addr.sin_addr))));
-						}
+						ConnectionAdd(i);
 					}
 					else
 					{
-						ssize_t bytes;
-						char buf[1024];
 
-						if ((bytes = ::recv(i, buf, sizeof(buf), 0)) <= 0)
+						auto it = connections.find(i);
+
+						if (it == connections.end())
 						{
-							std::cout << "Close connection on fd [" << i << "] data size " << bytes << ".\n" << std::endl;
+							std::cerr << "Connection was not added to list of connections." << std::endl;
 
 							::close(i);
+
 							FD_CLR(i, &fd_connections);
+
+							continue;
 						}
-						else
+
+						switch (it->second->getState())
 						{
-							int optval = 1;
-							socklen_t optlen = sizeof(optval);
-
-							struct protoent *tcp_proto;
-
-							if (setsockopt(i, SOL_SOCKET, SO_KEEPALIVE,
-										   (const void *)&optval, optlen) < 0)
-							{
-								return 0;
-							}
-
-							optval = 1;
-
-							tcp_proto = getprotobyname("TCP");
-							//setsockopt(fd_listener, tcp_proto->p_proto, TCP_NODELAY, &optval, optlen);
-							
-							fcntl(i, F_SETFL, O_NONBLOCK);
-
-							Parser parser(buf, bytes);
-
-							if (parser.GetParserError() != Parser::PARSER_ERROR_NONE)
-							{
-								std::cerr << "Faild to parse  data from connection on fd [" << i << "].\n" << std::endl;
-
-								::close(i);
-
-								FD_CLR(i, &fd_connections);
-							}
-
-							std::string sec_websocket_key {"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"};
-							sec_websocket_key.insert(0, parser["Sec-WebSocket-Key"]);
-
-							unsigned char hash[20];
-
-							sha1::calc(sec_websocket_key.data(), (int)sec_websocket_key.length(), hash);
-
-							char answer[1024];
-
-							snprintf(answer, 1024, "HTTP/1.1 101 Switching Protocols\x0d\x0a"
-													"Upgrade: websocket\x0d\x0a"
-													"Connection: Upgrade\x0d\x0a"
-													"Sec-WebSocket-Accept: %s\x0d\x0a"
-													"Sec-WebSocket-Protocol: %s\x0d\x0a\x0d\x0a",
-													base64_encode(hash, 20).c_str(), parser["Sec-WebSocket-Protocol"].c_str());
-
-							::send(i, answer, strlen(answer), 0);
+							case ClientConnection::CONNECTION_ACCEPTED:
+								ConnectionHandshake(i);
+								break;
+							case ClientConnection::CONNECTION_REGISTRED:
+								ConnectionHandle(i);
+								break;
+							default:
+								std::cerr << ConnectionStateToString(it->second->getState()) << std::endl;
+								break;
 						}
 					}
 				}
@@ -199,6 +145,241 @@ int Server::Wait(int time)
 	}
 
 	return 1;
+}
+
+int Server::ConnectionAdd(int fd)
+{
+	std::cout << "New connection on fds.\n" << std::endl;
+
+	struct sockaddr_in remote_addr;
+	socklen_t addrlen;
+
+	addrlen = sizeof(remote_addr);
+	int new_fd = ::accept(fd, (struct sockaddr *)&remote_addr, &addrlen);
+
+	if (new_fd == -1)
+	{
+		std::cout << "Fail to get new connection.\n" << std::endl;
+
+		return -1;
+	}
+	else
+	{
+		FD_SET(new_fd, &fd_connections);
+
+		if(new_fd > fd_max - 1)
+		{
+			fd_max = new_fd + 1;
+		}
+
+		connections[new_fd] = std::shared_ptr<ClientConnection>(new ClientConnection(new_fd, ntohs(remote_addr.sin_port), inet_ntoa(remote_addr.sin_addr)));
+	}
+
+	return 0;
+}
+
+int Server::ConnectionHandshake(int fd)
+{
+	ssize_t bytes;
+	char buf[1024];
+
+	if ((bytes = ::recv(fd, buf, sizeof(buf), 0)) <= 0)
+	{
+		std::cout << "Close connection on fd [" << fd << "] data size " << bytes << ".\n" << std::endl;
+
+		::close(fd);
+		FD_CLR(fd, &fd_connections);
+	}
+	else
+	{
+		int optval = 1;
+		socklen_t optlen = sizeof(optval);
+
+		struct protoent *tcp_proto;
+
+		if (setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE,
+					   (const void *)&optval, optlen) < 0)
+		{
+			return 0;
+		}
+
+		optval = 1;
+
+		tcp_proto = getprotobyname("TCP");
+		//setsockopt(fd_listener, tcp_proto->p_proto, TCP_NODELAY, &optval, optlen);
+
+		fcntl(fd, F_SETFL, O_NONBLOCK);
+
+		Parser parser(buf, bytes);
+
+		if (parser.GetParserError() != Parser::PARSER_ERROR_NONE)
+		{
+			std::cerr << "Faild to parse  data from connection on fd [" << fd << "].\n" << std::endl;
+
+			::close(fd);
+
+			FD_CLR(fd, &fd_connections);
+		}
+
+		std::string sec_websocket_key {"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"};
+		sec_websocket_key.insert(0, parser["Sec-WebSocket-Key"]);
+
+		unsigned char hash[20];
+
+		sha1::calc(sec_websocket_key.data(), (int)sec_websocket_key.length(), hash);
+
+		char answer[1024];
+
+		snprintf(answer, 1024, "HTTP/1.1 101 Switching Protocols\x0d\x0a"
+				"Upgrade: websocket\x0d\x0a"
+				"Connection: Upgrade\x0d\x0a"
+				"Sec-WebSocket-Accept: %s\x0d\x0a"
+				"Sec-WebSocket-Protocol: %s\x0d\x0a\x0d\x0a",
+				base64_encode(hash, 20).c_str(), parser["Sec-WebSocket-Protocol"].c_str());
+
+		if (::send(fd, answer, strlen(answer), 0) != strlen(answer))
+		{
+			std::cerr << "Faild to send all data to connection on fd [" << fd << "].\n" << std::endl;
+
+			::close(fd);
+
+			FD_CLR(fd, &fd_connections);
+		}
+
+		auto it = connections.find(fd);
+
+		if (it != connections.end())
+		{
+			it->second->setState(ClientConnection::CONNECTION_REGISTRED);
+		}
+		else
+		{
+			std::cerr << "Faild to talk with connection on fd [" << fd << "]. Connection was not registred.\n" << std::endl;
+
+			::close(fd);
+
+			FD_CLR(fd, &fd_connections);
+		}
+	}
+
+	return 0;
+}
+
+int Server::ConnectionHandle(int fd)
+{
+	ssize_t bytes;
+	char buf[1024];
+
+	if ((bytes = ::recv(fd, buf, sizeof(buf), 0)) <= 0)
+	{
+		std::cout << "Close connection on fd [" << fd << "] data size " << bytes << "." << std::endl;
+
+		::close(fd);
+		FD_CLR(fd, &fd_connections);
+	}
+	else
+	{
+		std::cout << "New data from fd [ " << fd << " ] " << " data size " << bytes << std::endl;
+
+		DataFrame data_frame;
+
+		unsigned int offset { 0 };
+
+		while (data_frame.state != DataFrame::DATA_FRAME_END_OF_DATA)
+		{
+			switch (data_frame.state)
+			{
+			case DataFrame::DATA_FRAME_FINAL:
+				data_frame.final = buf[offset] & DataFrame::DATA_FRAME_BIT_FINAL;
+			case DataFrame::DATA_FRAME_RSV1:
+				data_frame.rsv1 = buf[offset] & DataFrame::DATA_FRAME_BIT_RSV1;
+			case DataFrame::DATA_FRAME_RSV2:
+				data_frame.rsv2 = buf[offset] & DataFrame::DATA_FRAME_BIT_RSV2;
+			case DataFrame::DATA_FRAME_RSV3:
+				data_frame.rsv3 = buf[offset] & DataFrame::DATA_FRAME_BIT_RSV3;
+			case DataFrame::DATA_FRAME_OPCODE:
+				// TODO: Implement opcode usage
+				data_frame.opcode = buf[offset] & DataFrame::DATA_FRAME_BIT_OPCODE;
+				data_frame.state = DataFrame::DATA_FRAME_MASK;
+				break;
+			case DataFrame::DATA_FRAME_MASK:
+				data_frame.mask = buf[offset] & DataFrame::DATA_FRAME_BIT_MASK;
+			case DataFrame::DATA_FRAME_PAYLOAD_LENGHT:
+			{
+				switch (buf[offset] & DataFrame::DATA_FRAME_BIT_PAYLOAD_LENGHT)
+				{
+				case 126:
+					data_frame.payload_lenght = buf[offset] << 8;
+					data_frame.payload_lenght |= buf[++offset];
+					break;
+				case 127:
+					// TODO: Check size
+					// on 32 bit machine we don't have 64 bit type
+				#if defined __LP64__
+					data_frame.payload_lenght = (size_t)buf[offset] << 56;
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 48;
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 40;
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 32;
+				#else
+					offset += 4;
+				#endif
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 24;
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 16;
+					data_frame.payload_lenght |= (size_t)buf[++offset] << 8;
+					data_frame.payload_lenght |= (size_t)buf[++offset];
+					break;
+				default:
+					data_frame.payload_lenght = (buf[offset] & DataFrame::DATA_FRAME_BIT_PAYLOAD_LENGHT);
+					break;
+				}
+
+				data_frame.state = data_frame.mask ? DataFrame::DATA_FRAME_MASK_KEY : DataFrame::DATA_FRAME_PAYLOAD_DATA;
+				break;
+			}
+			case DataFrame::DATA_FRAME_MASK_KEY:
+				// TODO: Check size of buf
+				data_frame.mask_key[0] = buf[offset];
+				data_frame.mask_key[1] = buf[++offset];
+				data_frame.mask_key[2] = buf[++offset];
+				data_frame.mask_key[3] = buf[++offset];
+			case DataFrame::DATA_FRAME_MASK_PAYLOAD_DATA:
+			{
+				++offset;
+				size_t mask_offset = 0;
+				size_t payload_data_it = 0;
+				while (offset + 4 < bytes)
+				{
+					mask_offset = 0;
+					data_frame.payload_data[payload_data_it] = buf[offset] ^ data_frame.mask_key[mask_offset];
+					data_frame.payload_data[++payload_data_it] = buf[++offset] ^ data_frame.mask_key[++mask_offset];
+					data_frame.payload_data[++payload_data_it] = buf[++offset] ^ data_frame.mask_key[++mask_offset];
+					data_frame.payload_data[++payload_data_it] = buf[++offset] ^ data_frame.mask_key[++mask_offset];
+					++payload_data_it;
+					++offset;
+				}
+
+				data_frame.payload_data[payload_data_it] = '\0';
+				std::cout << "data: " << data_frame.payload_data << std::endl;
+
+				data_frame.state = DataFrame::DATA_FRAME_END_OF_DATA;
+
+				break;
+			}
+			case DataFrame::DATA_FRAME_PAYLOAD_DATA:
+				assert(!data_frame.mask);
+				data_frame.state = DataFrame::DATA_FRAME_END_OF_DATA;
+				break;
+			case DataFrame::DATA_FRAME_END_OF_DATA:
+					// dump packet?
+			default:
+				break;
+			}
+
+			++offset;
+		}
+	}
+
+	return 0;
 }
 
 int Server::CreateServer(int port)
@@ -258,4 +439,19 @@ int Server::CreateServer(int port)
 	fcntl(fd_listener, F_SETFL, O_NONBLOCK);
 
 	return 1;
+}
+
+/**
+ * InternalSend
+ *
+ * Return values:
+ * -1 Send data fail.
+ * -2 Socket in.
+
+ */
+int InternalSend(int fd, size_t size, const char *data)
+{
+	::send(fd, data, size, 0);
+
+	return 0;
 }
