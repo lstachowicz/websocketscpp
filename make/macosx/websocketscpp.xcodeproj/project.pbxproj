@@ -17,6 +17,8 @@
 		25A7BCA019FD0230003489D4 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9A19FD0230003489D4 /* Parser.h */; };
 		25A7BCA119FD0230003489D4 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A7BC9B19FD0230003489D4 /* Server.cpp */; };
 		25A7BCA219FD0230003489D4 /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A7BC9C19FD0230003489D4 /* Server.h */; };
+		25AF74A21A277F0A002C1164 /* Select.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25AF74A01A277F0A002C1164 /* Select.cpp */; };
+		25AF74A31A277F0A002C1164 /* Select.h in Headers */ = {isa = PBXBuildFile; fileRef = 25AF74A11A277F0A002C1164 /* Select.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		25A7BC9A19FD0230003489D4 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../../src/Parser.h; sourceTree = "<group>"; };
 		25A7BC9B19FD0230003489D4 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Server.cpp; path = ../../src/Server.cpp; sourceTree = "<group>"; };
 		25A7BC9C19FD0230003489D4 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../../src/Server.h; sourceTree = "<group>"; };
+		25AF74A01A277F0A002C1164 /* Select.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Select.cpp; path = ../../src/Select.cpp; sourceTree = "<group>"; };
+		25AF74A11A277F0A002C1164 /* Select.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Select.h; path = ../../src/Select.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +54,7 @@
 				25A7BC9719FD0230003489D4 /* ClientConnection.cpp */,
 				25A7BC9919FD0230003489D4 /* Parser.cpp */,
 				25A7BC9B19FD0230003489D4 /* Server.cpp */,
+				25AF74A01A277F0A002C1164 /* Select.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -60,6 +65,7 @@
 				25A7BC9819FD0230003489D4 /* ClientConnection.h */,
 				25A7BC9A19FD0230003489D4 /* Parser.h */,
 				25A7BC9C19FD0230003489D4 /* Server.h */,
+				25AF74A11A277F0A002C1164 /* Select.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -119,6 +125,7 @@
 				25A7BC9619FD021E003489D4 /* base64.h in Headers */,
 				25A7BC9E19FD0230003489D4 /* ClientConnection.h in Headers */,
 				25A7BC9219FD020D003489D4 /* sha1.h in Headers */,
+				25AF74A31A277F0A002C1164 /* Select.h in Headers */,
 				25A7BCA019FD0230003489D4 /* Parser.h in Headers */,
 				25A7BCA219FD0230003489D4 /* Server.h in Headers */,
 			);
@@ -184,6 +191,7 @@
 				25A7BC9519FD021E003489D4 /* base64.cpp in Sources */,
 				25A7BCA119FD0230003489D4 /* Server.cpp in Sources */,
 				25A7BC9119FD020D003489D4 /* sha1.cpp in Sources */,
+				25AF74A21A277F0A002C1164 /* Select.cpp in Sources */,
 				25A7BC9D19FD0230003489D4 /* ClientConnection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

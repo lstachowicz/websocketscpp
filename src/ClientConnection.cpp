@@ -17,7 +17,7 @@ ClientConnection::ClientConnection(int fd, long port, const std::string& address
 	: connection_fd(fd)
 	, connection_port(port)
 	, connection_address(address)
-	, connection_state(CONNECTION_ACCEPTED)
+	, connection_state(CONNECTION_ACCEPT)
 {
 }
 
@@ -39,10 +39,10 @@ std::string WebSocketCpp::ConnectionStateToString(ClientConnection::ConnectionSt
 {
 	switch (state)
 	{
-		case WebSocketCpp::ClientConnection::CONNECTION_ACCEPTED:
-			return "CONNECTION_ACCEPTED";
-		case WebSocketCpp::ClientConnection::CONNECTION_REGISTRED:
-			return "CONNECTION_REGISTRED";
+		case WebSocketCpp::ClientConnection::CONNECTION_NONE:
+			return "CONNECTION_NONE";
+		case WebSocketCpp::ClientConnection::CONNECTION_ACCEPT:
+			return "CONNECTION_ACCEPT";
 		default:
 			break;
 	}
@@ -50,4 +50,9 @@ std::string WebSocketCpp::ConnectionStateToString(ClientConnection::ConnectionSt
 	std::stringstream ss;
 	ss << "Unknow state was passed to ConnectionStateToString [ " << state << " ].";
 	return ss.str();
+}
+
+void ClientConnection::cleanDataFrame()
+{
+	data_frame = DataFrame();
 }

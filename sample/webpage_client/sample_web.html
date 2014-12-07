@@ -40,7 +40,7 @@
 				socket = new WebSocket("wws://" + host + ":" + port, protocol);
 			}
 			else {
-				socket = new WebSocket("ws://127.0.0.1:3000/", "abc");
+				socket = new WebSocket("ws://" + host + ":" + port, protocol);
 				/*
 				 * " + host + ":" + port, protocol);
 				 */
@@ -67,7 +67,7 @@
 		};
 
 		socket.onmessage = function(event) {
-			write("Message:\n" + event.data + "\n");
+			write("Message: [" + event.data + "] \n");
 		};
 
 		socket.onerror = function(event) {
