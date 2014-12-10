@@ -1,23 +1,25 @@
-#include "Server.h"
+#include "ServerInstance.h"
 
 #include <iostream>
 #include <random>
 
 int main(int argc, char** argv)
 {
-	WebSocketCpp::Server server;
+	ServerInstance server;
 
 	srand(static_cast<unsigned int>(time(nullptr)));
 
 	int port = 3000 + (rand() % 5);
 
-	if (server.CreateServer(port))
+	if (server.Bind(port))
 	{
 		std::cout << "Created server at port: " << port << std::endl;
 	}
 	else
 	{
-		std::cerr << "Could not create server at port [" << port << "]" << std::endl;
+		std::cerr << "Could not create server at port [" << port << "]"
+		          << std::endl;
+		
 		return -1;
 	}
 

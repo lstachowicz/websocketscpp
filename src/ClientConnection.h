@@ -1,13 +1,5 @@
-//
-//  ClientConnection.h
-//  websocketscpp
-//
-//  Created by Stachowicz, Lukasz on 23/10/14.
-//  Copyright (c) 2014 Łukasz Stachowicz. All rights reserved.
-//
-
-#ifndef WEBSOCKETCPP_CLIENTCONNECTION
-#define WEBSOCKETCPP_CLIENTCONNECTION
+#ifndef WEBSOCKETCPP_CLIENT_CONNECTION
+#define WEBSOCKETCPP_CLIENT_CONNECTION
 
 #include <string>
 #include "Parser.h"
@@ -43,7 +35,7 @@ private:
 
 	DataFrame data_frame;
 
-	friend Server;
+	friend class ServerPrivate;
 };
 
 	std::string ConnectionStateToString(ClientConnection::ConnectionState state);

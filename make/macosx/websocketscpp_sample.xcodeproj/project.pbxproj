@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		251F540A19FD0477006636C7 /* libwebsocketscpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F540819FD03C1006636C7 /* libwebsocketscpp.dylib */; };
 		253B9D7119FD056000524AD2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 253B9D7019FD056000524AD2 /* main.cpp */; };
+		254DB49F1A389C9900B6B98B /* ServerInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254DB49D1A389C9900B6B98B /* ServerInstance.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,8 @@
 		251D39D019F950AC0044C266 /* websocketscpp_sample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = websocketscpp_sample; sourceTree = BUILT_PRODUCTS_DIR; };
 		251F540819FD03C1006636C7 /* libwebsocketscpp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwebsocketscpp.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/websocketscpp-ejrigqoggosbozfgkexttdconozb/Build/Products/Debug/libwebsocketscpp.dylib"; sourceTree = "<group>"; };
 		253B9D7019FD056000524AD2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../sample/server/main.cpp; sourceTree = SOURCE_ROOT; };
+		254DB49D1A389C9900B6B98B /* ServerInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ServerInstance.cpp; path = ../../sample/server/ServerInstance.cpp; sourceTree = SOURCE_ROOT; };
+		254DB49E1A389C9900B6B98B /* ServerInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerInstance.h; path = ../../sample/server/ServerInstance.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,8 @@
 		251D39D219F950AC0044C266 /* websocketscpp_sample */ = {
 			isa = PBXGroup;
 			children = (
+				254DB49D1A389C9900B6B98B /* ServerInstance.cpp */,
+				254DB49E1A389C9900B6B98B /* ServerInstance.h */,
 				253B9D7019FD056000524AD2 /* main.cpp */,
 			);
 			path = websocketscpp_sample;
@@ -123,6 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				253B9D7119FD056000524AD2 /* main.cpp in Sources */,
+				254DB49F1A389C9900B6B98B /* ServerInstance.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +170,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../../src,
+					../../include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -203,7 +209,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../../src,
+					../../include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;

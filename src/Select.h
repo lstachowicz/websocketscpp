@@ -1,11 +1,3 @@
-//
-//  Select.h
-//  websocketscpp
-//
-//  Created by Stachowicz, Lukasz on 27/11/14.
-//  Copyright (c) 2014 Łukasz Stachowicz. All rights reserved.
-//
-
 #ifndef WEBSOCKETSCPP_SELECT
 #define WEBSOCKETSCPP_SELECT
 

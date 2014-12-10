@@ -1,15 +1,8 @@
-//
-//  Server.h
-//  websocketscpp
-//
-//  Created by Stachowicz, Lukasz on 23/10/14.
-//  Copyright (c) 2014 Łukasz Stachowicz. All rights reserved.
-//
-
-#ifndef WEBSOCKETCPP_SERVER
-#define WEBSOCKETCPP_SERVER
+#ifndef WEBSOCKETCPP_SERVER_PRIVATE
+#define WEBSOCKETCPP_SERVER_PRIVATE
 
 #include "Select.h"
+#include "Server.h"
 
 #include <sys/types.h>
 
@@ -20,21 +13,25 @@
 namespace WebSocketCpp {
 
 class ClientConnection;
-
-class Server
+	
+class ServerPrivate
 {
+const size_t MAX_SEND_DATA = 1024;
+	
 public:
-	const size_t MAX_SEND_DATA = 1024;
+	ServerPrivate();
+	~ServerPrivate();
 
-	Server();
-	~Server();
-
-	int CreateServer(int port);
-
-	void Run();
-	int Wait(int time);
+	int Bind(short port);
+	int Wait(int time_ms);
+	
+	int Send();
+	
+	void SetCallbackServer(Server *server);
 
 private:
+	Server *callback_server;
+	
 	int InternalSend(int fd, size_t size, const char *data);
 
 	int ConnectionAdd(int fd);

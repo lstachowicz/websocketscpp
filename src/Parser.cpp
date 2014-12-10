@@ -267,10 +267,9 @@ int WebSocketCpp::CreateFood(std::vector<char> &data_out, const char* data, cons
 	}
 
 	#else
-	for (int i = 0; i < size; ++i)
-	{
-		data_out.push_back(data[i]);
-	}
+	size_t last_index = data_out.size();
+	data_out.resize(data_out.size() + size);
+	memcpy(&(data_out.data()[last_index]), data, size);
 	#endif
 
 	return 0;

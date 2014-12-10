@@ -1,11 +1,3 @@
-//
-//  Parser.h
-//  websocketscpp
-//
-//  Created by Stachowicz, Lukasz on 23/10/14.
-//  Copyright (c) 2014 Łukasz Stachowicz. All rights reserved.
-//
-
 #ifndef WEBSOCKETCPP_PARSER
 #define WEBSOCKETCPP_PARSER
 
