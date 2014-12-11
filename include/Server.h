@@ -41,9 +41,13 @@ public:
 	bool Bind(int port);
 	
 	/**
-	 * Wait for any server activity. Server could be stopped by using function
+	 * Wait for any server activity e.i. new connection, close connection,
+	 * new message. Server could be stopped by using function
 	 * Stop.
-	 * @param time_ms				: [in] wait time in ms
+	 * @param time_ms				: [in] wait time in milis
+	 *
+	 * @note if time_ms is set to max value of unsigned int then time will
+	 * be unlimited.
 	 *
 	 * @return on new event return value is 1;
 	 *         on error return value is -1;
@@ -51,7 +55,7 @@ public:
 	 *
 	 * @see Stop function.
 	 */
-	int Wait(int time_ms);
+	int Wait(unsigned int time_ms);
 	
 	/**
 	 * Wakeup server. This will cause immediately stop waiting on connection.
@@ -143,7 +147,7 @@ private:
 	void DoCallOpened(int socket, const std::string& address);
 	void DoCallClosed(int socket);
 	
-	void* server;
+	void* server_private;
 };
 	
 };

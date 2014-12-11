@@ -33,20 +33,74 @@
 
 using namespace WebSocketCpp;
 
-ServerPrivate::ServerPrivate()
-	: listener(-1)
+ServerPrivate::ServerPrivate(Server *server)
+	: callback_server(server)
+	, listener(-1)
 {
+	if (server == nullptr)
+		assert(!"Passing nullptr parameter to constructor.");
 }
 
 ServerPrivate::~ServerPrivate()
 {
+	callback_server = nullptr;
+	
 	if (listener != -1)
 	{
 		::close(listener);
 	}
 }
 
-int ServerPrivate::Wait(int time_ms)
+int ServerPrivate::Bind(short port)
+{
+	struct sockaddr_in my_addr = {AF_INET, 0, INADDR_ANY};
+	
+	struct protoent* protocol = ::getprotobyname("tcp");
+	
+	listener = ::socket(PF_INET, SOCK_STREAM, protocol->p_proto);
+	
+	if (listener == -1)
+	{
+		std::cerr << "Could not create socket" << std::endl;
+		return -1;
+	}
+	
+	my_addr.sin_port = htons(port);
+	
+	if (::bind(listener, (struct sockaddr *)&my_addr, sizeof(my_addr)))
+	{
+		std::cerr << "Faild to bind port\n" << std::endl;
+		
+		if (listener != -1)
+			::close(listener);
+		listener = -1;
+		
+		return -1;
+	}
+	
+	if (::listen(listener, max_listen) != 0)
+	{
+		std::cerr << "Faild to listen on port\n" << std::endl;
+		return -1;
+	}
+	
+	selector.Add(listener);
+	
+	int optval = 1;
+	socklen_t optlen = sizeof(optval);
+	
+	if (::setsockopt(listener, SOL_SOCKET, SO_KEEPALIVE,
+					 (const void *)&optval, optlen) < 0)
+	{
+		std::cerr << "Faild to setsocket option\n" << std::endl;
+	}
+	
+	fcntl(listener, F_SETFL, O_NONBLOCK);
+	
+	return 1;
+}
+
+int ServerPrivate::Wait(unsigned int time_ms)
 {
 	if (listener == -1)
 	{
@@ -103,6 +157,20 @@ int ServerPrivate::Wait(int time_ms)
 	return 1;
 }
 
+int ServerPrivate::Send(int socket, const char *data, const size_t data_size, Server::Data flag)
+{
+	auto it = connections.find(socket);
+	
+	if (it != connections.end())
+	{
+		std::vector<char> food;
+		CreateFood(food, data, data_size);
+		return ::send(it->first, food.data(), food.size(), 0);
+	}
+	
+	return -1;
+}
+
 int ServerPrivate::ConnectionAdd(int fd)
 {
 	std::cout << "New connection on fds.\n" << std::endl;
@@ -126,6 +194,24 @@ int ServerPrivate::ConnectionAdd(int fd)
 		connections[new_fd] = std::shared_ptr<ClientConnection>(new ClientConnection(new_fd, ntohs(remote_addr.sin_port), inet_ntoa(remote_addr.sin_addr)));
 	}
 
+	return 0;
+}
+
+int ServerPrivate::ConnectionClose(int fd)
+{
+	callback_server->Closed(fd);
+	
+	::close(fd);
+	
+	selector.Rem(fd);
+	
+	auto it = connections.find(fd);
+	
+	if (it != connections.end())
+	{
+		connections.erase(it);
+	}
+	
 	return 0;
 }
 
@@ -155,14 +241,14 @@ int ServerPrivate::ConnectionHandshake(int fd)
 
 		optval = 1;
 
-		tcp_proto = getprotobyname("TCP");
+		tcp_proto = getprotobyname("tcp");
 		//setsockopt(fd_listener, tcp_proto->p_proto, TCP_NODELAY, &optval, optlen);
 
 		fcntl(fd, F_SETFL, O_NONBLOCK);
 
 		Parser parser(buf, bytes);
 
-		if (parser.GetParserError() != Parser::PARSER_ERROR_NONE)
+		if (parser.GetError() != Parser::PARSER_ERROR_NONE)
 		{
 			std::cerr << "Faild to parse  data from connection on fd [" << fd << "].\n" << std::endl;
 
@@ -248,99 +334,12 @@ int ServerPrivate::ConnectionHandle(int fd)
 			{
 				it->second->cleanDataFrame(); // before clean notif about new data.
 			}
-
-			std::vector<char> food;
-			CreateFood(food, "Foo", strlen("Foo"));
-			std::cout << "Sending: " << ::send(it->first, food.data(), food.size(), 0) << std::endl;
-//			std::cout << "Sending: " << ::send(it->first, buf, bytes, 0) << std::endl;
 		}
 		else
 		{
 			std::cerr << "Connection fd [ " << fd << " ] was not added\n";
 		}
 	}
-
-	return 0;
-}
-
-
-
-int ServerPrivate::Bind(short port)
-{
-	struct sockaddr_in my_addr = {AF_INET, 0, INADDR_ANY};
-
-	struct protoent* protocol = ::getprotobyname("TCP");
-
-	listener = ::socket(PF_INET, SOCK_STREAM, protocol->p_proto);
-
-	if (listener == -1)
-	{
-		std::cerr << "Could not create socket" << std::endl;
-		return -1;
-	}
-
-	my_addr.sin_port = htons(port);
-
-	if (::bind(listener, (struct sockaddr *)&my_addr, sizeof(my_addr)))
-	{
-		std::cerr << "Faild to bind port\n" << std::endl;
-
-		if (listener != -1)
-			::close(listener);
-		listener = -1;
-
-		return -1;
-	}
-
-	if (::listen(listener, max_listen) != 0)
-	{
-		std::cerr << "Faild to listen on port\n" << std::endl;
-		return -1;
-	}
-
-	selector.Add(listener);
-
-	int optval = 1;
-	socklen_t optlen = sizeof(optval);
-
-	if (::setsockopt(listener, SOL_SOCKET, SO_KEEPALIVE,
-				   (const void *)&optval, optlen) < 0)
-	{
-		std::cerr << "Faild to setsocket option\n" << std::endl;
-	}
-
-	optval = 1;
-
-	// struct protoent *tcp_proto;
-	// tcp_proto = ::getprotobyname("TCP");
-	// ::setsockopt(fd_listener, tcp_proto->p_proto, TCP_NODELAY, &optval, optlen);
-
-	fcntl(listener, F_SETFL, O_NONBLOCK);
-
-	return 1;
-}
-
-int ServerPrivate::ConnectionClose(int fd)
-{
-	callback_server->Closed(fd);
-	
-	::close(fd);
-
-	selector.Rem(fd);
-
-	auto it = connections.find(fd);
-
-	if (it != connections.end())
-	{
-		connections.erase(it);
-	}
-
-	return 0;
-}
-
-int InternalSend(int fd, size_t size, const char *data)
-{
-	::send(fd, data, size, 0);
 
 	return 0;
 }

@@ -14,6 +14,43 @@
 
 using namespace WebSocketCpp;
 
+ParserBase::ParserError ParserBase::GetError()
+{
+	return error;
+}
+
+std::string ParserBase::GetErrorString()
+{
+	switch (error)
+	{
+		case PARSER_ERROR_NONE:
+			return "PARSER_ERROR_NONE";
+  		default:
+			assert(!"Unknow parser error");
+			return "Unknow parser error";
+	}
+}
+
+std::string ParserHtml::operator[](const std::string &key)
+{
+	return key_value[key];
+}
+
+std::string ParserHtml::GetHeader()
+{
+	return data_header;
+}
+
+void ParserHtml::SetHeader(const std::string &header)
+{
+	data_header = header;
+}
+
+void ParserHtml::SetKey(const std::string &key, const std::string &value)
+{
+	key_value[key] = value;
+}
+
 Parser::Parser(const char* data, long len)
 	: parser_error(0)
 {
@@ -31,10 +68,6 @@ Parser::Parser(const char* data, long len)
 	std::cout << "Header: " << header << std::endl;
 
 	parser_error = parseData(data + readed, len - readed);
-}
-
-Parser::~Parser()
-{
 }
 
 const std::string Parser::operator[](const std::string& key)
@@ -86,11 +119,6 @@ int Parser::parseData(const char *data, long len)
 	}
 
 	return PARSER_ERROR_NONE;
-}
-
-int Parser::GetParserError()
-{
-	return 0;
 }
 
 DataFrame::DataFrameState WebSocketCpp::FeedParser(DataFrame &data_frame, const unsigned char c)

@@ -15,7 +15,7 @@ public:
 	int Add(int socket);
 	int Rem(int socket);
 
-	int Wait(int ms, std::vector<int> &ready);
+	int Wait(unsigned int ms, std::vector<int> &ready);
 
 	void Quit(bool value = true);
 

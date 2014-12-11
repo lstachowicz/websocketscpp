@@ -7,20 +7,46 @@
 
 namespace WebSocketCpp {
 
-class Parser
+class ParserBase
 {
 public:
+	
 	enum ParserError
 	{
 		PARSER_ERROR_NONE = 0
 	};
-
+	
+	ParserError GetError();
+	std::string GetErrorString();
+	
+	virtual ParserError Encode() = 0;
+	virtual ParserError Decode() = 0;
+	
+protected:
+	ParserError error = PARSER_ERROR_NONE;
+};
+	
+class ParserHtml : ParserBase
+{
+public:
+	std::string operator[](const std::string& key);
+	
+	std::string GetHeader();
+	void SetHeader(const std::string &header);
+	void SetKey(const std::string &key, const std::string &value = "");
+	
+private:
+	std::string data_header;
+	std::map<std::string, std::string> key_value;
+};
+	
+class Parser : public ParserBase
+{
+public:
 	Parser(const char* data, long len);
 	~Parser();
 
 	const std::string operator[](const std::string& key);
-
-	int GetParserError();
 private:
 	int parseData(const char* data, long len);
 

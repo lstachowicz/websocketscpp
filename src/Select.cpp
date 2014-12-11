@@ -51,11 +51,18 @@ int Select::Rem(int socket)
 	return -1;
 }
 
-int Select::Wait(int ms, std::vector<int> &ready)
+int Select::Wait(unsigned int ms, std::vector<int> &ready)
 {
-	timeval tv;
-	memset(&tv, 0, sizeof(tv));
-	tv.tv_sec = ms;
+	timeval *tv = nullptr;
+	timeval tv_in;
+	
+	if (ms != std::numeric_limits<unsigned int>::max())
+	{
+		tv = &tv_in;
+		memset(&tv_in, 0, sizeof(tv_in));
+		tv_in.tv_usec = (ms % 1000) * 1000;
+		tv_in.tv_sec =  (ms / 1000000);
+	}
 
 	fd_set fds;
 	FD_ZERO(&fds);
@@ -73,7 +80,7 @@ int Select::Wait(int ms, std::vector<int> &ready)
 
 	while (retval == 2)
 	{
-		int selected = ::select(fd_max, &fds, nullptr, nullptr, &tv);
+		int selected = ::select(fd_max, &fds, nullptr, nullptr, tv != nullptr ? tv : nullptr);
 
 		if (selected == -1)
 		{

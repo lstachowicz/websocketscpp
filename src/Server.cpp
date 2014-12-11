@@ -1,4 +1,4 @@
-#include "../include/Server.h"
+#include "Server.h"
 #include "ServerPrivate.h"
 
 #include <assert.h>
@@ -11,68 +11,57 @@ inline ServerPrivate* GetServer(void *server)
 }
 
 Server::Server()
-	: server(nullptr)
+	: server_private(nullptr)
 {
 }
 
 Server::~Server()
 {
-	if (server != nullptr)
+	if (server_private != nullptr)
 	{
-		auto server_imp = GetServer(server);
+		auto server_imp = GetServer(server_private);
 		delete server_imp;
-		server = nullptr;
+		server_private = nullptr;
 	}
 }
 
 bool Server::Bind(int port)
 {
-	if (server != nullptr)
+	if (server_private != nullptr)
 		return false;
 	
-	server = new WebSocketCpp::ServerPrivate();
-	GetServer(server)->SetCallbackServer(this);
+	server_private = new ServerPrivate(this);
 	
-	if (GetServer(server)->Bind(port) != -1)
+	if (GetServer(server_private)->Bind(port) != -1)
 		return true;
 	
-	delete GetServer(server);
-	server = nullptr;
+	delete GetServer(server_private);
+	server_private = nullptr;
 	return false;
 }
 	
 
-int Server::Wait(int time_ms)
+int Server::Wait(unsigned int time_ms)
 {
-	if (server == nullptr)
+	if (server_private == nullptr)
 		return -1;
 	
-	return GetServer(server)->Wait(time_ms);
+	return GetServer(server_private)->Wait(time_ms);
 }
 
 int Server::Send(int socket, const char *data, const size_t data_size, Data flag)
 {
-	if (server == nullptr)
-		return false;
+	if (server_private == nullptr)
+		return -1;
 	
-	switch (flag)
-	{
-	case Text:
-		return 0;
-	case Binary:
-		return 0;
-	default:
-		assert(!"Server::Send: Unknow data type.");
-		break;
-	}
-	
-	return 0;
+	return GetServer(server_private)->Send(socket, data, data_size, flag);
 }
 
 bool Server::Close(int socket)
 {
-	if (server == nullptr)
+	if (server_private == nullptr)
 		return false;
 	
+//	return GetServer(server)->Close(socket);
 	return false;
 }

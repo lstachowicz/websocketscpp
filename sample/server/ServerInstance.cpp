@@ -71,8 +71,24 @@ void ServerInstance::Run()
 {
 	bool quit = false;
 	
+	int send = 0;
+	
 	while(!quit)
 	{
-		quit = (Wait(5) == -1);
+		quit = (Wait(std::numeric_limits<unsigned int>::max()) == -1);
+		++send;
+		
+		if (send > 10)
+		{
+			for (auto it : users)
+			{
+				int socket = it;
+				std::string message = "ServerInstance: Foo";
+				std::cout << "ServerInstance: Sending message "
+				          << Send(socket, message.c_str(), message.length())
+			              << std::endl;
+			}
+			send = 0;
+		}
 	}
 }
