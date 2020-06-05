@@ -70,6 +70,10 @@ Parser::Parser(const char* data, long len)
 	parser_error = parseData(data + readed, len - readed);
 }
 
+Parser::~Parser()
+{
+}
+
 const std::string Parser::operator[](const std::string& key)
 {
 	return map[key];

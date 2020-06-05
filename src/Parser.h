@@ -19,8 +19,8 @@ public:
 	ParserError GetError();
 	std::string GetErrorString();
 	
-	virtual ParserError Encode() = 0;
-	virtual ParserError Decode() = 0;
+//	virtual ParserError Encode() = 0;
+//	virtual ParserError Decode() = 0;
 	
 protected:
 	ParserError error = PARSER_ERROR_NONE;

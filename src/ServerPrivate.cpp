@@ -250,7 +250,7 @@ int ServerPrivate::ConnectionHandshake(int fd)
 
 		if (parser.GetError() != Parser::PARSER_ERROR_NONE)
 		{
-			std::cerr << "Faild to parse  data from connection on fd [" << fd << "].\n" << std::endl;
+			std::cerr << "Faild to parse data from connection on fd [" << fd << "].\n" << std::endl;
 
 			ConnectionClose(fd);
 		}

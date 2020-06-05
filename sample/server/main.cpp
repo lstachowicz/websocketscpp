@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 
 	srand(static_cast<unsigned int>(time(nullptr)));
 
-	int port = 3000 + (rand() % 5);
+	int port = 3000;
 
 	if (server.Bind(port))
 	{
