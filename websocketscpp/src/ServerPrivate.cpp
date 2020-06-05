@@ -51,7 +51,7 @@ ServerPrivate::~ServerPrivate()
 	}
 }
 
-int ServerPrivate::Bind(short port)
+int ServerPrivate::Bind(unsigned short port)
 {
 	struct sockaddr_in my_addr = {AF_INET, 0, INADDR_ANY};
 	

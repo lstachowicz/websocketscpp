@@ -344,7 +344,7 @@ std::string WebSocketCpp::printopcode(const char& value)
 		case DataFrame::DATA_FRAME_OPCODE_RES_F:
 			return "DATA_FRAME_OPCODE_RES_F";
 		default:
-			assert(!"Unknow opcode");
-			return "Unknow opcode";
+			assert(!"Unknown opcode");
+			return "Unknown opcode";
 	}
 }

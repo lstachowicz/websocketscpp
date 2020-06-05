@@ -23,7 +23,7 @@ public:
 	explicit ServerPrivate(Server *server);
 	~ServerPrivate();
 
-	int Bind(short port);
+	int Bind(unsigned short port);
 	int Wait(unsigned int time_ms);
 	
 	int Send(int socket, const char *data, const size_t data_size, Server::Data flag);

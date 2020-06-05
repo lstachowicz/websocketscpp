@@ -38,7 +38,7 @@ public:
 	 *
 	 * @return on success function return true.
 	 */
-	bool Bind(int port);
+	bool Bind(unsigned short port);
 	
 	/**
 	 * Wait for any server activity e.i. new connection, close connection,

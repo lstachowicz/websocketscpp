@@ -25,7 +25,7 @@ Server::~Server()
 	}
 }
 
-bool Server::Bind(int port)
+bool Server::Bind(unsigned short port)
 {
 	if (server_private != nullptr)
 		return false;

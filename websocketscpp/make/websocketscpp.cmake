@@ -27,6 +27,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 # websocketscpp_tests
 add_executable(websocketscpp_tests
 	${TESTS_DIR}/parser_tests.cpp
+	${TESTS_DIR}/server_tests.cpp
+)
+
+target_include_directories(websocketscpp_tests
+	PRIVATE ${SOURCE_DIR}
+	PRIVATE ${HEADER_DIR}
 )
 
 target_link_libraries(websocketscpp_tests
@@ -38,8 +44,10 @@ add_test(NAME websocketscpp_tests
 	COMMAND websocketscpp_tests --output-on-failure
 ) 
 
-# websocketscpp_coverage
-setup_target_for_coverage_lcov(NAME websocketscpp_coverage
-	EXECUTABLE websocketscpp_tests
-	EXCLUDE "${ROOT_DIR}/ext-lib/*" "/Applications/*" "BUILD_DIR*/*" "${TESTS_DIR}/*"
-)
+if (HAVE_COVERAGE)
+	# websocketscpp_coverage
+	setup_target_for_coverage_lcov(NAME websocketscpp_coverage
+		EXECUTABLE websocketscpp_tests
+		EXCLUDE "${ROOT_DIR}/ext-lib/*" "/Applications/*" "BUILD_DIR*/*" "${TESTS_DIR}/*"
+	)
+endif()
