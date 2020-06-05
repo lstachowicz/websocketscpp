@@ -16,7 +16,8 @@ class ClientConnection;
 	
 class ServerPrivate
 {
-const size_t MAX_SEND_DATA = 1024;
+// estimated MTU value
+const size_t MAX_SEND_DATA = 1500;
 	
 public:
 	explicit ServerPrivate(Server *server);
